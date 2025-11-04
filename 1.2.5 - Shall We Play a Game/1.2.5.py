@@ -58,10 +58,15 @@ def calc(hand):
         aces -= 1
     return total
 
+#Game Variables
+Chips = 5000
+playing = True
 
-
-name = Screen.textinput("Would you like to play?")
-Credits = 5000
+# Main loop needed for BJ
+while playing:
+    bet = Screen.numinput("Pick a Bet Amount", f"You have {Chips}. Enter Your Bet:", minval=500, maxval=credits)
+    
+    
 
 
 deck = ((2,))
