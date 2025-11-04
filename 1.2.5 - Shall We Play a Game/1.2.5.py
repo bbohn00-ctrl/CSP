@@ -44,16 +44,21 @@ def draw_slots(x, y, label, cards, total, hide_dealer=False):
     pen.write(f"Total: {total_text}", align="center", font=("Arial", 20, "bold"))
 
 
-#Deck Setup
-# Better way to make the deck without tedious uploads using a 52 card deck
+
+# Deck Setup/ Better way to make the deck without tedious uploads using a 52 card deck
 deck = [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11]* 4
 
-def deal_cards():
-    return rand.choice(deck)
 
-def calculate_hand(hand):
+#Calcualting the hands
+def calc(hand):
     total = sum(hand)
     aces = hand.count(11)
+    while total > 21 and aces:
+        total -= 10
+        aces -= 1
+    return total
+
+
 
 name = Screen.textinput("Would you like to play?")
 Credits = 5000
