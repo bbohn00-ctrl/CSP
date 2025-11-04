@@ -4,13 +4,13 @@ import random as rand
 #Setup screen
 Screen = trtl.Screen()
 Screen.bgcolor("darkgreen")
-
 pen = trtl.Turtle()
 pen.hideturtle()
+pen.color("white")
 pen.speed(0)
 
 #Deck Setup
-# Better way to make the deck without tedious uploads
+# Better way to make the deck without tedious uploads using a 52 card deck
 deck = [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11]* 4
 
 def deal_cards():
@@ -20,25 +20,24 @@ def calculate_hand(hand):
     total = sum(hand)
     aces = hand.count(11)
 
+#Table UI/ Card Slots
+def draw_slots(x, y, label, cards, total, hide_dealer=False):
+    pen.penup()
+    pen.goto(x, y)
+    pen.pendown()
+    pen.setheading(0)
+    for _ in range(2):
+        pen.forward(120)
+        pen.left(90)
+        pen.forward(160)
+        pen.left(90)
+    pen.penup()
+
 
 
 name = Screen.textinput("Would you like to play?")
 Credits = 5000
-#Cards slot cordinates
-player_start_X = -150
-player_start_Y = -150
-dealer_start_X = -150
-dealer_start_Y = 150
 
-for x, label in [(start_x, "START"), (finish_x, "FINISH")]:
-    pen.penup()
-    pen.goto(x, -120)
-    pen.setheading(90)
-    pen.pendown()
-    pen.forward(240)
-    pen.penup()
-    pen.goto(x, 130)
-    pen.write(label, align="center", font=("Arial", 12, "bold"))
 
 deck = ((2,))
 
