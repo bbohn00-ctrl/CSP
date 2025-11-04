@@ -9,16 +9,6 @@ pen.hideturtle()
 pen.color("white")
 pen.speed(0)
 
-#Deck Setup
-# Better way to make the deck without tedious uploads using a 52 card deck
-deck = [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11]* 4
-
-def deal_cards():
-    return rand.choice(deck)
-
-def calculate_hand(hand):
-    total = sum(hand)
-    aces = hand.count(11)
 
 #Table UI/ Card Slots
 def draw_slots(x, y, label, cards, total, hide_dealer=False):
@@ -33,7 +23,30 @@ def draw_slots(x, y, label, cards, total, hide_dealer=False):
         pen.left(90)
     pen.penup()
 
+#Card Score Label 
+    pen.goto(x + 60, y + 140)
+    pen.write(label, align= "middle", font=("Arial", 14, "bold"))
 
+#Hiding the dealers hole card logic
+    if hide_dealer:
+        display_cards = [cards[0], "?"]
+        total_text = "?"
+    else:
+        display_cards = cards
+        total_text = str(total)
+
+
+
+#Deck Setup
+# Better way to make the deck without tedious uploads using a 52 card deck
+deck = [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11]* 4
+
+def deal_cards():
+    return rand.choice(deck)
+
+def calculate_hand(hand):
+    total = sum(hand)
+    aces = hand.count(11)
 
 name = Screen.textinput("Would you like to play?")
 Credits = 5000
@@ -41,7 +54,7 @@ Credits = 5000
 
 deck = ((2,))
 
-screen.mainloop()
+
 #TODO
 #TODO
 #Green Felt UI
