@@ -35,6 +35,13 @@ def draw_slots(x, y, label, cards, total, hide_dealer=False):
         display_cards = cards
         total_text = str(total)
 
+#Showing the hand
+    pen.goto(x + 60, y + 60)
+    pen.write(f"Cards: {display_cards}", align="center", font=("Arial", 12, "normal"))
+
+    # All cards fliped/drawn
+    pen.goto(x + 60, y + 20)
+    pen.write(f"Total: {total_text}", align="center", font=("Arial", 20, "bold"))
 
 
 #Deck Setup
