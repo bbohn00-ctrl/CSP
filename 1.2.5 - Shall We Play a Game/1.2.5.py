@@ -9,8 +9,18 @@ pen = trtl.Turtle()
 pen.hideturtle()
 pen.speed(0)
 
+#Deck Setup
 # Better way to make the deck without tedious uploads
 deck = [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11]* 4
+
+def deal_cards():
+    return rand.choice(deck)
+
+def calculate_hand(hand):
+    total = sum(hand)
+    aces = hand.count(11)
+
+
 
 name = Screen.textinput("Would you like to play?")
 Credits = 5000
