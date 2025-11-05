@@ -64,7 +64,7 @@ playing = True
 
 # Main loop needed for BJ
 while playing:
-    bet = Screen.numinput("Pick a Bet Amount", f"You have {Chips}. Enter Your Bet:", minval=500, maxval=credits)
+    bet = Screen.numinput("Pick a Bet Amount", f"You have {Chips}. Enter Your Bet:", minval=500, maxval=Chips)
     
     player = [rand.choice(deck), rand.choice(deck)]
     dealer = [rand.choice(deck), rand.choice(deck)]
@@ -75,7 +75,7 @@ while playing:
 
 #Player Goes
     while calc(player) < 21:
-        playersmove = Screen.textinput("Your turn", "Enter 'hit' or 'stand':").lower()
+        playersmove = Screen.textinput("Your turn", "Enter 'h' or 's':").lower()
         if playersmove == "hit":
             player.append(rand.choice(deck))
             pen.clear()
@@ -87,9 +87,36 @@ while playing:
     playerscore_total = calc(player)
     dealerscore_total = calc(dealer)
 
+#Dealer Goes
+    while dealerscore_total < 17:
+        dealer.append(rand.choice(deck))
+        dealerscore_total = calc(dealer)
+
+#Show Results of the Hand
+    pen.clear()
+    draw_slots(-150, 0, "Player", player, playerscore_total)
+    draw_slots(-150, 0, "Dealer", dealer, dealerscore_total)
+
+    if playerscore_total > 21:
+        result = "Bust! Dealer Wins"
+        Chips -= bet
+    elif dealerscore_total > 21 or playerscore_total > dealerscore_total:
+        result = "You Win!"
+        Chips += bet
+    elif playerscore_total < dealerscore_total:
+        result = "Dealer Wins"
+        Chips -= bet
+    else:
+        result = "Tie"
+
+    pen.goto(0. -180)
+    pen.write(f"{result}\nChips: {Chips}", align="center", font=("Arial", 16, "bold"))
+        
 
 
-deck = ((2,))
+
+
+
 
 
 #TODO
