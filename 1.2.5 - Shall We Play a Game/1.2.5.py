@@ -66,7 +66,12 @@ playing = True
 while playing:
     bet = Screen.numinput("Pick a Bet Amount", f"You have {Chips}. Enter Your Bet:", minval=500, maxval=credits)
     
-    
+    player = [rand.choice(deck), rand.choice(deck)]
+    dealer = [rand.choice(deck), rand.choice(deck)]
+
+    pen.clear()
+    draw_slots(-150, 0, "Player", player, calc(player))
+    draw_slots(-150, 0, "Dealer", dealer, calc(dealer), hide_dealer=True)
 
 
 deck = ((2,))
