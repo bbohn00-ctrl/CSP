@@ -84,6 +84,9 @@ while playing:
         else:
             break
 
+    playerscore_total = calc(player)
+    dealerscore_total = calc(dealer)
+
 
 
 deck = ((2,))
