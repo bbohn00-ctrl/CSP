@@ -73,6 +73,18 @@ while playing:
     draw_slots(-150, 0, "Player", player, calc(player))
     draw_slots(-150, 0, "Dealer", dealer, calc(dealer), hide_dealer=True)
 
+#Player Goes
+    while calc(player) < 21:
+        playersmove = Screen.textinput("Your turn", "Enter 'hit' or 'stand':").lower()
+        if playersmove == "hit":
+            player.append(rand.choice(deck))
+            pen.clear()
+            draw_slots(-150, 0, "Player", player, calc(player))
+            draw_slots(-150, 0, "Dealer", player, calc(player), hide_dealer=True)
+        else:
+            break
+
+
 
 deck = ((2,))
 
