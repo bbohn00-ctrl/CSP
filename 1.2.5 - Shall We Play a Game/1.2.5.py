@@ -1,14 +1,13 @@
 import turtle as trtl
 import random as rand
 
-#Setup screen
-Screen = trtl.Screen()
-Screen.bgcolor("darkgreen")
+#Setup Screen
+screen = trtl.Screen()
+screen.bgcolor("darkgreen")
 pen = trtl.Turtle()
 pen.hideturtle()
 pen.color("white")
 pen.speed(0)
-
 
 #Table UI/ Card Slots
 def draw_slots(x, y, label, cards, total, hide_dealer=False):
@@ -25,7 +24,7 @@ def draw_slots(x, y, label, cards, total, hide_dealer=False):
 
 #Card Score Label 
     pen.goto(x + 60, y + 140)
-    pen.write(label, align= "middle", font=("Arial", 14, "bold"))
+    pen.write(label, align="center", font=("Arial", 14, "bold"))
 
 #Hiding the dealers hole card logic
     if hide_dealer:
@@ -43,11 +42,8 @@ def draw_slots(x, y, label, cards, total, hide_dealer=False):
     pen.goto(x + 60, y + 20)
     pen.write(f"Total: {total_text}", align="center", font=("Arial", 20, "bold"))
 
-
-
 # Deck Setup/ Better way to make the deck without tedious uploads using a 52 card deck
 deck = [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11]* 4
-
 
 #Calcualting the hands
 def calc(hand):
@@ -59,28 +55,33 @@ def calc(hand):
     return total
 
 #Game Variables
-Chips = 5000
+credits = 5000
 playing = True
 
 # Main loop needed for BJ
 while playing:
-    bet = Screen.numinput("Pick a Bet Amount", f"You have {Chips}. Enter Your Bet:", minval=500, maxval=Chips)
-    
+    bet = None
+    while bet is None:  # Repeats the question until a valid input is set in
+        bet = screen.numinput("Pick a Bet Amount", f"You have {credits}. Enter Your Bet:", minval=1, maxval=credits)
+        if bet is None:
+            continue  
+    bet = int(bet) 
+
     player = [rand.choice(deck), rand.choice(deck)]
     dealer = [rand.choice(deck), rand.choice(deck)]
 
     pen.clear()
     draw_slots(-150, 0, "Player", player, calc(player))
-    draw_slots(-150, 0, "Dealer", dealer, calc(dealer), hide_dealer=True)
+    draw_slots(150, 0, "Dealer", dealer, calc(dealer), hide_dealer=True)
 
 #Player Goes
     while calc(player) < 21:
-        playersmove = Screen.textinput("Your turn", "Enter 'h' or 's':").lower()
-        if playersmove == "hit":
+        move = screen.textinput("Your turn", "Enter 'hit' or 'stand':").lower()
+        if move == "hit":
             player.append(rand.choice(deck))
             pen.clear()
             draw_slots(-150, 0, "Player", player, calc(player))
-            draw_slots(-150, 0, "Dealer", player, calc(player), hide_dealer=True)
+            draw_slots(150, 0, "Dealer", dealer, calc(dealer), hide_dealer=True)
         else:
             break
 
@@ -95,32 +96,37 @@ while playing:
 #Show Results of the Hand
     pen.clear()
     draw_slots(-150, 0, "Player", player, playerscore_total)
-    draw_slots(-150, 0, "Dealer", dealer, dealerscore_total)
+    draw_slots(150, 0, "Dealer", dealer, dealerscore_total)
 
     if playerscore_total > 21:
         result = "Bust! Dealer Wins"
         Chips -= bet
+        credits -= bet
     elif dealerscore_total > 21 or playerscore_total > dealerscore_total:
         result = "You Win!"
         Chips += bet
+        credits += bet
     elif playerscore_total < dealerscore_total:
         result = "Dealer Wins"
         Chips -= bet
+        credits -= bet
     else:
         result = "Tie"
 
     pen.goto(0. -180)
     pen.write(f"{result}\nChips: {Chips}", align="center", font=("Arial", 16, "bold"))
+    pen.goto(0, -180)
+    pen.write(f"{result}\nCredits: {credits}", align="center", font=("Arial", 16, "bold"))
         
-
-
-
-
-
-
-
-#TODO
-#TODO
-#Green Felt UI
-# Deck of cards
-#
+#Check the players chip count-So the code knows when to end the game
+    if credits >= 50000:
+        screen.textinput("Congradulations You Win!")
+        playing = False
+    elif credits <= 0:
+        screen.textinput("Sorry your all out of luck")
+        playing= False
+    else:
+        again = screen.textinput("Would you like to play again?", "Type 'yes' or 'no':")
+        if again is None or again.lower() != "yes":
+            playing = False
+screen.bye()
