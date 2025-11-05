@@ -129,4 +129,4 @@ while playing:
         again = screen.textinput("Would you like to play again?", "Type 'yes' or 'no':")
         if again is None or again.lower() != "yes":
             playing = False
-screen.bye()
+screen.bye()screen.mainloop()
